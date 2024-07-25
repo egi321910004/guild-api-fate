@@ -10,13 +10,17 @@ import {
 } from '@nestjs/common';
 import { MailService } from './mail.service';
 import { CreateMailDto } from './dto/create-mail.dto';
+
+import { ApiTags, ApiBody } from '@nestjs/swagger';
 import { Mail } from 'src/schemas/mail.schema';
 
 @Controller('mails')
+@ApiTags('mails')
 export class MailController {
   constructor(private readonly mailService: MailService) {}
 
   @Post()
+  @ApiBody({ type: CreateMailDto })
   async create(@Body() createMailDto: CreateMailDto): Promise<Mail> {
     return this.mailService.create(createMailDto);
   }
@@ -32,6 +36,7 @@ export class MailController {
   }
 
   @Put(':id')
+  @ApiBody({ type: CreateMailDto })
   async update(
     @Param('id') id: string,
     @Body() updateMailDto: CreateMailDto,
