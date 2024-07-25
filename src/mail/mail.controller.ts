@@ -7,6 +7,8 @@ import {
   Put,
   Param,
   Delete,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { MailService } from './mail.service';
 import { CreateMailDto } from './dto/create-mail.dto';
@@ -21,13 +23,42 @@ export class MailController {
 
   @Post()
   @ApiBody({ type: CreateMailDto })
-  async create(@Body() createMailDto: CreateMailDto): Promise<Mail> {
-    return this.mailService.create(createMailDto);
+  async create(@Body() createMailDto: CreateMailDto): Promise<any> {
+    try {
+      const mail = await this.mailService.create(createMailDto);
+      return {
+        resultCode: '200',
+        resultMessage: 'Success',
+        data: mail,
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          resultCode: '500',
+          resultMessage: 'Internal Server Error',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
-
   @Get()
-  async findAll(): Promise<Mail[]> {
-    return this.mailService.findAll();
+  async findAll(): Promise<any> {
+    try {
+      const mails = await this.mailService.findAll();
+      return {
+        resultCode: '200',
+        resultMessage: 'Success',
+        data: mails,
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          resultCode: '500',
+          resultMessage: 'Internal Server Error',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Get(':id')
