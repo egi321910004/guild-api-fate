@@ -8,6 +8,20 @@ async function bootstrap() {
     .setTitle('Fate API')
     .setDescription('Fate DN Return API Services')
     .setVersion('1.0')
+    .setLicense(
+      'Copyrights � 2024. Official Fate DN Return',
+      'https://opensource.org/licenses/MIT',
+    )
+    // .addServer('https://api.fatednreturn.org', 'Production Server')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        description: 'Enter JWT token',
+      },
+      'bearer-token', // This name must match the security scheme name below
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
