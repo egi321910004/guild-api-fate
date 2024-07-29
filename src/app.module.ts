@@ -7,6 +7,7 @@ import { EventModule } from './event/event.module';
 @Module({
   imports: [
     MongooseModule.forRoot(process.env.MONGO_URL),
+
     MailModule,
     EventModule,
   ],
