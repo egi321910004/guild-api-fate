@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MailModule } from './mail/mail.module';
 import { EventController } from './event/event.controller';
 import { EventModule } from './event/event.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { EventModule } from './event/event.module';
     ),
     MailModule,
     EventModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],
